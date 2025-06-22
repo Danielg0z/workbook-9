@@ -197,4 +197,129 @@ public class JdbcProductDao implements ProductDao {
         return product;
     }
 
-}
+    @Override
+    public Product findByName(String name) {
+        Product product = new Product();
+
+        String sql = "SELECT ProductID, ProductName, CategoryID, UnitPrice FROM products WHERE ProductName = ?";
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
+            {// change ot prepared
+
+                preparedStatement.setString(1, name);
+
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+                while (resultSet.next()) {
+                    // Create a new Product object.
+
+                    // Set the Product's ID from the "film_id" column.
+                    product.setProductId(resultSet.getInt("ProductID"));
+
+                    // Set the Product's title from the "title" column.
+                    product.setName(resultSet.getString("ProductName"));
+
+                    // Set the Product's rental rate from the "rental_rate" column.
+                    product.setCategoryId(resultSet.getInt("CategoryID"));
+
+                    product.setPrice(resultSet.getDouble("UnitPrice"));
+
+
+                }
+
+
+            }
+        } catch (SQLException e) {
+            // If something goes wrong (SQL error), print the stack trace to help debug.
+            e.printStackTrace();
+        }
+
+        return product;
+    }
+
+    @Override
+    public Product findByCatId(int catId) {
+        Product product = new Product();
+
+        String sql = "SELECT ProductID, ProductName, CategoryID, UnitPrice FROM products WHERE CategoryID = ?";
+
+        // This is a "try-with-resources" block.
+        // It ensures that the Connection, Statement, and ResultSet are closed automatically after we are done.
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql);){
+            {// change ot prepared
+
+                preparedStatement.setInt(1, catId);
+
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+                // Loop through each row in the ResultSet.
+                while (resultSet.next()) {
+                    // Create a new Product object.
+
+                    // Set the Product's ID from the "film_id" column.
+                    product.setProductId(resultSet.getInt("ProductID"));
+
+                    // Set the Product's title from the "title" column.
+                    product.setName(resultSet.getString("ProductName"));
+
+                    // Set the Product's rental rate from the "rental_rate" column.
+                    product.setCategoryId(resultSet.getInt("CategoryID"));
+
+                    product.setPrice(resultSet.getDouble("UnitPrice"));
+
+                }
+            }
+
+        } catch (SQLException e) {
+            // If something goes wrong (SQL error), print the stack trace to help debug.
+            e.printStackTrace();
+        }
+
+        return product;
+    }
+
+    @Override
+    public Product findByPrice(double price) {
+        Product product = new Product();
+
+        String sql = "SELECT ProductID, ProductName, CategoryID, UnitPrice FROM products WHERE ProductID = ?";
+
+        // This is a "try-with-resources" block.
+        // It ensures that the Connection, Statement, and ResultSet are closed automatically after we are done.
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql);){
+            {// change ot prepared
+
+                preparedStatement.setDouble(1, price);
+
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+
+                // Loop through each row in the ResultSet.
+                while (resultSet.next()) {
+                    // Create a new Product object.
+
+                    // Set the Product's ID from the "film_id" column.
+                    product.setProductId(resultSet.getInt("ProductID"));
+
+                    // Set the Product's title from the "title" column.
+                    product.setName(resultSet.getString("ProductName"));
+
+                    // Set the Product's rental rate from the "rental_rate" column.
+                    product.setCategoryId(resultSet.getInt("CategoryID"));
+
+                    product.setPrice(resultSet.getDouble("UnitPrice"));
+
+                }
+            }
+
+        } catch (SQLException e) {
+            // If something goes wrong (SQL error), print the stack trace to help debug.
+            e.printStackTrace();
+        }
+
+        return product; }
+
+    }

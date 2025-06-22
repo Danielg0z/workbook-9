@@ -9,7 +9,8 @@ public interface CategoryDao {
     List<Category> getAll(); //Get - Create
     Category add(Category category); // Post
     Category update(Category category); // Put
-    Category delete(Category category); //
+    Category delete(int id); // Delete
 
     Category findById(int id);
+    Category findByName(String name);
 }
